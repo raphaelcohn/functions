@@ -20,30 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
-
-public final class CollectionHelper
+public interface SizedIterable<T> extends Iterable<T>
 {
-	@NotNull
-	public static <V> V add(@NotNull final Collection<V> collection, @NotNull final V value)
-	{
-		collection.add(value);
-		return value;
-	}
+	int size();
 
-	public static <V> void addOnce(@NotNull final Collection<V> collection, @NotNull final V value)
-	{
-		if (!collection.add(value))
-		{
-			throw new AddOnceViolationException(value);
-		}
-	}
-
-	private CollectionHelper()
-	{
-	}
+	@Override
+	SizedIterator<T> iterator();
 }

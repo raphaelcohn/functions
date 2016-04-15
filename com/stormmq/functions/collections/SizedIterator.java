@@ -20,16 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.stormmq.string.Formatting.format;
+import java.util.Collection;
+import java.util.Iterator;
 
-public final class AddOnceViolationException extends RuntimeException
+public interface SizedIterator<T> extends Iterator<T>
 {
-	public <K, V> AddOnceViolationException(@NotNull final V value)
+	int size();
+
+	@NotNull
+	static <T> SizedIterator<T> sizedIteratorFromCollection(@NotNull final Collection<T> collection)
 	{
-		super(format("Tried to put the value '%1$s' more than once", value));
+		return new CollectionSizedIterator<>(collection);
 	}
+
 }

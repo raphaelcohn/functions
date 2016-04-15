@@ -20,21 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.primitives;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
-import java.util.Iterator;
-
-public interface SizedIterator<T> extends Iterator<T>
+public final class IntHelper
 {
-	int size();
-
-	@NotNull
-	static <T> SizedIterator<T> sizedIteratorFromCollection(@NotNull final Collection<T> collection)
+	@SuppressWarnings({"NumericCastThatLosesPrecision", "MagicNumber"})
+	public static int roundUpToNearestPowerOfTwoIfGreaterThanZero(final int value)
 	{
-		return new CollectionSizedIterator<>(collection);
+		// Inspired by https://graphics.stanford.edu/~seander/bithacks.html
+		long v = value;
+		v--;
+		v |= v >> 1;
+		v |= v >> 2;
+		v |= v >> 4;
+		v |= v >> 8;
+		v |= v >> 16;
+		v++;
+		return (int) v;
 	}
 
+	public static boolean isNotAPowerOfTwoIfGreaterThanZero(final int alignmentAsPowerOfTwo)
+	{
+		// Inspiration at http://www.geeksforgeeks.org/write-one-line-c-function-to-find-whether-a-no-is-power-of-two/
+		return (alignmentAsPowerOfTwo & (alignmentAsPowerOfTwo - 1)) != 0;
+	}
+
+	private IntHelper()
+	{
+	}
 }

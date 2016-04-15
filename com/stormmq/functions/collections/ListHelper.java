@@ -20,8 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
+import com.stormmq.functions.ExceptionConsumer;
 import org.jetbrains.annotations.*;
 
 import java.util.*;

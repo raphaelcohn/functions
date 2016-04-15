@@ -20,12 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
-public interface SizedIterable<T> extends Iterable<T>
+import org.jetbrains.annotations.*;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+public final class CollectionSizedIterator<E> implements SizedIterator<E>
 {
-	int size();
+	private final int size;
+	private final Iterator<E> iterator;
+
+	public CollectionSizedIterator(@NotNull final Collection<E> collection)
+	{
+		this(collection.size(), collection.iterator());
+	}
+
+	private CollectionSizedIterator(final int size, @NotNull final Iterator<E> iterator)
+	{
+		this.size = size;
+		this.iterator = iterator;
+	}
 
 	@Override
-	SizedIterator<T> iterator();
+	public int size()
+	{
+		return size;
+	}
+
+	@Override
+	public boolean hasNext()
+	{
+		return iterator.hasNext();
+	}
+
+	@Override
+	public E next()
+	{
+		return iterator.next();
+	}
 }

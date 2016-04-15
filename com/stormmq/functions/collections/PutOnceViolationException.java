@@ -20,44 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
 import org.jetbrains.annotations.*;
 
-import java.util.Collection;
-import java.util.Iterator;
+import static com.stormmq.string.Formatting.format;
 
-public final class CollectionSizedIterator<E> implements SizedIterator<E>
+public final class PutOnceViolationException extends RuntimeException
 {
-	private final int size;
-	private final Iterator<E> iterator;
-
-	public CollectionSizedIterator(@NotNull final Collection<E> collection)
+	public <K, V> PutOnceViolationException(@NotNull final K key, @NotNull final V value)
 	{
-		this(collection.size(), collection.iterator());
-	}
-
-	private CollectionSizedIterator(final int size, @NotNull final Iterator<E> iterator)
-	{
-		this.size = size;
-		this.iterator = iterator;
-	}
-
-	@Override
-	public int size()
-	{
-		return size;
-	}
-
-	@Override
-	public boolean hasNext()
-	{
-		return iterator.hasNext();
-	}
-
-	@Override
-	public E next()
-	{
-		return iterator.next();
+		super(format("Tried to put the key '%1$s' more than once, already has the value '%2$s'", key, value));
 	}
 }

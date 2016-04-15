@@ -20,32 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
-public final class IntHelper
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+
+public final class CollectionHelper
 {
-	@SuppressWarnings({"NumericCastThatLosesPrecision", "MagicNumber"})
-	public static int roundUpToNearestPowerOfTwoIfGreaterThanZero(final int value)
+	@NotNull
+	public static <V> V add(@NotNull final Collection<V> collection, @NotNull final V value)
 	{
-		// Inspired by https://graphics.stanford.edu/~seander/bithacks.html
-		long v = value;
-		v--;
-		v |= v >> 1;
-		v |= v >> 2;
-		v |= v >> 4;
-		v |= v >> 8;
-		v |= v >> 16;
-		v++;
-		return (int) v;
+		collection.add(value);
+		return value;
 	}
 
-	public static boolean isNotAPowerOfTwoIfGreaterThanZero(final int alignmentAsPowerOfTwo)
+	public static <V> void addOnce(@NotNull final Collection<V> collection, @NotNull final V value)
 	{
-		// Inspiration at http://www.geeksforgeeks.org/write-one-line-c-function-to-find-whether-a-no-is-power-of-two/
-		return (alignmentAsPowerOfTwo & (alignmentAsPowerOfTwo - 1)) != 0;
+		if (!collection.add(value))
+		{
+			throw new AddOnceViolationException(value);
+		}
 	}
 
-	private IntHelper()
+	private CollectionHelper()
 	{
 	}
 }

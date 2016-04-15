@@ -20,16 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-package com.stormmq.functions;
+package com.stormmq.functions.collections;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
 import static com.stormmq.string.Formatting.format;
 
-public final class PutOnceViolationException extends RuntimeException
+public final class AddOnceViolationException extends RuntimeException
 {
-	public <K, V> PutOnceViolationException(@NotNull final K key, @NotNull final V value)
+	public <K, V> AddOnceViolationException(@NotNull final V value)
 	{
-		super(format("Tried to put the key '%1$s' more than once, already has the value '%2$s'", key, value));
+		super(format("Tried to put the value '%1$s' more than once", value));
 	}
 }
